@@ -8,9 +8,10 @@ st.set_page_config(layout="wide")
 # --- CSVファイルからデータを読み込む ---
 @st.cache_data # ファイル読み込みの結果をキャッシュする
 def load_data():
-    flow_df = pd.read_csv("フロー定義.csv")
-    steps_df = pd.read_csv("ステップ定義.csv")
-    tips_df = pd.read_csv("Tips.csv")
+    # --- ここが修正点！実際のファイル名に合わせる ---
+    flow_df = pd.read_csv("ヘルプデスクDB - フロー定義.csv")
+    steps_df = pd.read_csv("ヘルプデスクDB - ステップ定義.csv")
+    tips_df = pd.read_csv("ヘルプデスクDB - Tips.csv")
     return flow_df, steps_df, tips_df
 
 flow_df, steps_df, tips_df = load_data()
@@ -39,6 +40,7 @@ if user_input: # ボタンを押さなくても、入力されたら即座に検
             st.graphviz_chart(graphviz_code)
         
         text_answer_lines = text_answer_raw.splitlines()
+        # 見えない特殊な空白文字を修正
         text_answer_formatted = '  \n'.join(text_answer_lines)
         with st.expander("テキストで手順を確認する"):
             st.markdown(text_answer_formatted)
